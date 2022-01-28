@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: restrict-access-to-business-tier-only
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: go-app
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: nginx-test
