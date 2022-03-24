@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-goapp-to-nginx
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: go-app

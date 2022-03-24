@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: go-app-to-db
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: database-master
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: go-app
