@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ~/policies
+cd ~
 find policies/ -maxdepth 0 -empty -exec $test=echo 0 \;
 
 if [ "$test" != 0 ];then
