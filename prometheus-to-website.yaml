@@ -1,0 +1,43 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: prometheus-to-website
+spec:
+  endpointSelector:
+    matchLabels:
+      app: wordpress
+  ingress:
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "80"
+    - fromEndpoints:
+        - {}
+    - fromEndpoints:
+        - matchLabels:
+            app: prometheus
+            "k8s:io.kubernetes.pod.namespace": log-analytics
+      toPorts:
+      - ports:
+        - port: "80"
+          protocol: "TCP"
+        rules:
+          http:
+          - method: "GET"
+            path: "/metrics"
+    
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEndpoints:
+        - {}
