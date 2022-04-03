@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: masterdb-to-slavedb
+  namespace: go
+spec:
+  podSelector:
+    matchLabels:
+      app: slavedb
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: masterdb
