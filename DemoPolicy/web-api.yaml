@@ -1,0 +1,12 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-all-api-server
+spec:
+  endpointSelector:
+    matchLabels:
+      io.kubernetes.pod.namespace: web
+      app: wordpress
+  egress:
+    - toEntities:
+      - kube-apiserver
